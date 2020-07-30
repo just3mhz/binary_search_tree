@@ -10,11 +10,11 @@ public:
         /* Empty */
     }
 
-    const std::shared_ptr<TNode>& Left() const {
+    const std::unique_ptr<TNode>& Left() const {
         return left_;
     }
 
-    const std::shared_ptr<TNode>& Right() const {
+    const std::unique_ptr<TNode>& Right() const {
         return right_;
     }
 
@@ -26,11 +26,11 @@ public:
         return value_;
     }
 
-    std::shared_ptr<TNode>& Left() {
+    std::unique_ptr<TNode>& Left() {
         return left_;
     }
 
-    std::shared_ptr<TNode>& Right() {
+    std::unique_ptr<TNode>& Right() {
         return right_;
     }
 
@@ -45,6 +45,6 @@ public:
 private:
     TKey key_;
     TValue value_;
-    std::shared_ptr<TNode> left_ = nullptr;
-    std::shared_ptr<TNode> right_ = nullptr;
+    std::unique_ptr<TNode> left_ = nullptr;
+    std::unique_ptr<TNode> right_ = nullptr;
 };

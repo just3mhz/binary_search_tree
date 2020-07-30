@@ -8,14 +8,14 @@
 template <typename TKey, typename TValue>
 class TBinarySearchTree {
 public:
-    using TNode_ = std::shared_ptr<TNode<TKey, TValue>>;
+    using TNode_ = std::unique_ptr<TNode<TKey, TValue>>;
 
     void Insert(const TKey &key, const TValue &value) {
         TNode_ &found_node = FindNodeWithKey(root_, key);
         if ( found_node != nullptr ) {
             throw std::invalid_argument("Node with this key already exist");
         }
-        found_node = std::make_shared<TNode<TKey, TValue>>(key, value);
+        found_node = std::make_unique<TNode<TKey, TValue>>(key, value);
     }
 
     void Remove(const TKey &key) {
@@ -27,10 +27,10 @@ public:
             found_node = nullptr;
         }
         else if ( found_node->Left() == nullptr ) {
-            found_node = found_node->Right();
+            found_node = std::move(found_node->Right());
         }
         else if ( found_node->Right() == nullptr ) {
-            found_node == found_node->Left();
+            found_node = std::move(found_node->Left());
         } else {
             TNode_ &swap_node = MostRight(found_node->Left());
             found_node->Key() = std::move(swap_node->Key());
